@@ -1,26 +1,60 @@
 import React from 'react';
+import Component from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {
+    BrowserRouter, 
+    Switch,
+    Route,
+    Link,
+    withRouter
+} from "react-router-dom";
+import Navigation from './navigation';
+import Home from './home';
+import SignIn from './signin';
+import {AutorizationProvider, withAutorization} from './autorization';
+import { auth } from './autorization';
+import SignUp from './signup';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+
+const SignIn2 = withAutorization(SignIn)
+const SignIn3 = withRouter(SignIn)
+
+    class App extends React.Component{
+      
+      
+        
+       
+      render(){
+          
+            return(
+              <AutorizationProvider>
+                  <BrowserRouter>
+
+                      <Navigation/>
+                        <Switch>
+                      <Route exact path="/">
+                          <Home/>
+                      </Route>
+                      <Route  path="/signin">
+                      
+                          <SignIn/>
+                                                    
+                          
+
+                      </Route>
+                      
+                      <Route  path="/signup">
+                      
+                          <SignUp/>
+                      </Route>
+                      
+                      </Switch>
+              </BrowserRouter>
+                </AutorizationProvider>
+              )
+              
+        }
+    }
 
 export default App;
